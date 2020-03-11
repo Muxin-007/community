@@ -1,6 +1,6 @@
 package muxin.community.community.dto;
 
-public class GiteeUser {
+public class GithubUser {
     private String name;
     private Long id;
     private String blo;

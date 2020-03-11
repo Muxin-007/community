@@ -1,16 +1,16 @@
 package muxin.community.community.provider;
 
+import com.alibaba.fastjson.JSON;
 import muxin.community.community.dto.AccessTokeDTO;
-import muxin.community.community.dto.GiteeUser;
+import muxin.community.community.dto.GithubUser;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
-import com.alibaba.fastjson.*;
 
 import java.io.IOException;
 
 
 @Component
-public class GiteeProvider {
+public class GithubProvider {
 
     public String getAccessToken(AccessTokeDTO accessTokeDTO){
         MediaType mediaType= MediaType.get("application/json; charset=utf-8");
@@ -19,7 +19,7 @@ public class GiteeProvider {
 
         RequestBody body = RequestBody.create(mediaType, JSON.toJSONString(accessTokeDTO));
         Request request = new Request.Builder()
-                .url("https://gitee.com/oauth/token")
+                .url("https://github.com/login/oauth/access_token")
                 .post(body)
                 .build();
         try (Response response = client.newCall(request).execute()) {
@@ -32,20 +32,19 @@ public class GiteeProvider {
         return null;
     }
 
-    public GiteeUser getUser(String accessToken){
+    public GithubUser getUser(String accessToken){
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("https://gitee.com/oauth/user?access_token="+accessToken)
+                .url("https://api.github.com/user?access_token="+accessToken)
                 .build();
         try {
             Response response = client.newCall(request).execute();
             String string = response.body().string();
-            GiteeUser giteeUser = JSON.parseObject(string, GiteeUser.class);
-            return giteeUser;
+            GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
+            return githubUser;
         } catch (IOException e) {
-            return null;
-
         }
+        return null;
     }
 
 
