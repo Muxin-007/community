@@ -1,6 +1,6 @@
 package muxin.community.community.controller;
 
-import muxin.community.community.dto.User;
+import muxin.community.community.model.User;
 import muxin.community.community.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

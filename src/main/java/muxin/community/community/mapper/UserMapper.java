@@ -1,6 +1,6 @@
 package muxin.community.community.mapper;
 
-import muxin.community.community.dto.User;
+import muxin.community.community.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

@@ -4,7 +4,6 @@ body{
 .main {
     background-color: white;
     margin: 30px;
-    height: 680px;
 }
 .btn-publish {
     float: right;

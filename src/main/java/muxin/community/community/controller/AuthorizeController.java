@@ -2,7 +2,7 @@ package muxin.community.community.controller;
 
 import muxin.community.community.dto.AccessTokeDTO;
 import muxin.community.community.dto.GithubUser;
-import muxin.community.community.dto.User;
+import muxin.community.community.model.User;
 import muxin.community.community.mapper.UserMapper;
 import muxin.community.community.provider.GithubProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +45,11 @@ public class AuthorizeController {
         accessTokeDTO.setState(state);
         String accessToken = githubProvider.getAccessToken(accessTokeDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
-        if (githubUser != null) {
+        if (githubUser != null && githubUser.getId() !=null) {
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setName(githubUser.getName());
-            user.setToken(UUID.randomUUID().toString());
+            user.setToken(token);
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());

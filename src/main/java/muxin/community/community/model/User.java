@@ -1,4 +1,4 @@
-package muxin.community.community.dto;
+package muxin.community.community.model;
 
 public class User {
     private Integer id;
