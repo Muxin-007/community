@@ -2,7 +2,6 @@ package muxin.community.community.controller;
 
 
 import muxin.community.community.dto.PaginationDTO;
-import muxin.community.community.mapper.UserMapper;
 import muxin.community.community.model.User;
 import muxin.community.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;

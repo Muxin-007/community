@@ -15,7 +15,6 @@ import java.util.List;
 
 @Service
 public class QuestionService {
-
     @Autowired
     private QuestionMapper questionMapper;
 
@@ -43,6 +42,9 @@ public class QuestionService {
         paginationDTO.setPagination(totalPage, page);
 
         Integer offset = size * (page - 1);
+        if (offset <0) {
+            offset=0;
+        }
         List<Question> questions = questionMapper.list(offset,size);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         for (Question question : questions) {
@@ -103,6 +105,18 @@ public class QuestionService {
         User user = userMapper.findById(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
+
+    }
+
+    public void createOrUpdate(Question question) {
+        if (question.getId() == null) {
+            //创建
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.create(question);
+        }else
+            //更新
+            questionMapper.update(question);
 
     }
 }
