@@ -8,12 +8,18 @@ github:
   redirect.uri: http://localhost:8887/callback
 
 spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    mode: HTML
+    cache: false
+    encoding: UTF-8
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/community?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: root
-#把_改成驼峰标识
 mybatis:
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: true #把_改成驼峰标识
+  type-aliases-package: muxin.community.mapper
+  mapper-locations: classpath:mapper/*.xml
