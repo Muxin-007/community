@@ -4,6 +4,7 @@ import muxin.community.dto.PaginationDTO;
 import muxin.community.dto.QuestionDTO;
 import muxin.community.exception.CustomizeErrorCode;
 import muxin.community.exception.CustomizeException;
+import muxin.community.mapper.QuestionExtMapper;
 import muxin.community.mapper.QuestionMapper;
 import muxin.community.mapper.UserMapper;
 import muxin.community.model.Question;
@@ -21,6 +22,8 @@ import java.util.List;
 public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     @Autowired
     private UserMapper userMapper;
@@ -66,7 +69,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public PaginationDTO list(Integer userId, Integer page, Integer size) {
+    public PaginationDTO list(Long userId, Integer page, Integer size) {
 
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
@@ -114,7 +117,7 @@ public class QuestionService {
 
     }
 
-    public QuestionDTO getById(Integer id) {
+    public QuestionDTO getById(Long id) {
         Question question = questionMapper.selectByPrimaryKey(id);
         if (question == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
@@ -133,6 +136,9 @@ public class QuestionService {
             //创建
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
+            question.setViewCount(0);
+            question.setLikeCount(0);
+            question.setCommentCount(0);
             questionMapper.insert(question);
         }else{
             //更新
@@ -150,5 +156,12 @@ public class QuestionService {
             }
         }
 
+    }
+
+    public void incView(Long id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }
