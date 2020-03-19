@@ -8,4 +8,6 @@
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 
 
+端口 8887
+
 
